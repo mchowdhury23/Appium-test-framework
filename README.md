@@ -37,11 +37,11 @@ npm install
 
 The APK (hey-linda-prod.apk) is pulled from Dropbox during the CI process. If you need it locally for testing, you can find the Dropbox link in the CI configuration.
 
-6. Running Tests Locally
+6. Start appium server
 Start the Appium server:
 npx appium -p 4724
 
-Run the tests: Run WebdriverIO with:
+7. Run the tests locally: Run WebdriverIO with:
 npx wdio
 
 
