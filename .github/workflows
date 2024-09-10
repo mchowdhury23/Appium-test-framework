@@ -1,0 +1,58 @@
+name: Node.js CI for WebdriverIO + Appium
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Set up Java
+      uses: actions/setup-java@v1
+      with:
+        java-version: '11'
+
+    - name: Enable KVM group permissions
+      run: |
+        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --name-match=kvm
+
+    - name: Install Node.js dependencies
+      run: npm install
+
+    
+    # Step to download the APK from Dropbox
+    - name: Download APK from Dropbox
+      run: |
+        wget "https://www.dropbox.com/scl/fi/noeawcht3uklit9qrh714/hey-linda-prod.apk?rlkey=jb5hajl8t3cf0x8y0applx8z0&dl=1" -O hey-linda-prod.apk
+
+
+    # Use Android Emulator Runner to set up and run the emulator
+    # https://github.com/ReactiveCircus/android-emulator-runner
+    - name: Run Android Emulator
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 30
+        target: google_apis
+        arch: x86_64
+        profile: Pixel 4
+        emulator-options: -no-snapshot -no-window -no-audio
+        disable-animations: true
+        script: npx wdio run wdio.conf.js
+
+    # Update your wdio.conf.js if necessary to use the downloaded APK in the tests
