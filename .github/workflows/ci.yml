@@ -50,7 +50,7 @@ jobs:
         api-level: 30
         target: google_apis
         arch: x86_64
-        profile: Pixel 4
+        profile: Nexus 6
         emulator-options: -no-snapshot -no-window -no-audio
         disable-animations: true
         script: npx wdio
