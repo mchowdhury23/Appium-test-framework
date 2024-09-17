@@ -2,6 +2,7 @@
 # Hey Linda Test Framework
 
 This repository contains a **WebdriverIO + Appium** test framework that automates tests for the **Hey Linda** app (`hey-linda-prod.apk`). The APK is hosted in Dropbox, and its link is included in the `ci.yml` file.
+Additional app info here : https://github.com/heylinda/heylinda-app
 
 ## CI Status
 You can view the latest successful build here: https://github.com/mchowdhury23/heyLindaTest/actions/runs/10793289725/job/29934866628
